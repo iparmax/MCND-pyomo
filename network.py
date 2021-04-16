@@ -1,5 +1,15 @@
 import networkx as nx
 import matplotlib.pyplot as plt
+import pandas as pd
+
+def network_dict(path):
+    # Load Network
+    df = pd.read_csv(path)
+    network = {}
+    operators = []
+    for index, row in df.iterrows():
+        network[row[0], row[1]] = row[2], row[3]
+    return network
 
 def get_network(links):
     G = nx.DiGraph()

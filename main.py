@@ -1,5 +1,5 @@
 
-from mcnd_data import *
+from ampl_data import *
 from MCND import *
 
 

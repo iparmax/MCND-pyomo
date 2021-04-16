@@ -13,14 +13,6 @@ def write_param(f,in_dict,param):
             count+=1
     f.write(';\n\n')
 
-def network_dict():
-    # Load Network
-    df = pd.read_csv('Data\\network.csv')
-    network = {}
-    operators = []
-    for index, row in df.iterrows():
-        network[row[0], row[1]] = row[2], row[3]
-    return network
 
 # Write file to AMPL Format 
 def create_dat():
@@ -119,7 +111,7 @@ def get_results(model,start):
     print(f'Execution time is {round(tm.time()-start,3)} seconds.')
 
 def get_duals(model):
-    network = network_dict()
+    network = network_dict('Data\\network.csv')
     duals =  {}
     for a in (model.CapacityConstraint):
         for count,k in enumerate(network.values()):

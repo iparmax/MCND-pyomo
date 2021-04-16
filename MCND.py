@@ -1,6 +1,6 @@
 import pyomo.environ as pyo
-from constraints_mcnd import flow_feas,capacity_constraint,obj_expression
-from mcnd_data import *
+from constraints import flow_feas,capacity_constraint,obj_expression
+from ampl_data import *
 
 
 class MCND():
