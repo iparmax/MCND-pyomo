@@ -9,6 +9,21 @@ def get_network(links):
         G.add_edge(i[0],i[1])
     return G
 
+def feas_paths(links,O,D):
+    G = nx.DiGraph()
+    for i in links.values():
+        G.add_node(i[0])
+        G.add_node(i[1])
+        G.add_edge(i[0],i[1])
+
+    r_feas = {}
+    count = 1
+    for i,j in zip(O,D): 
+        for path in nx.all_simple_paths(G, source=i, target=j):
+            r_feas[(count,i)] = path
+            count+=1
+    return r_feas
+
 def plot_network(G):
     plt.subplot(121)
     nx.draw_shell(G, with_labels=True, font_weight='bold')
