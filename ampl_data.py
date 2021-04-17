@@ -3,6 +3,7 @@ from network import *
 import shutil
 import pyomo.environ as pyo
 import time as tm 
+from collections import defaultdict
 
 def write_param(f,in_dict,param):
     f.write(f"param {param} := \n")
@@ -112,9 +113,13 @@ def get_results(model,start):
 
 def get_duals(model):
     network = network_dict('Data\\network.csv')
-    duals =  {}
+    duals = {} 
+    duals = defaultdict(lambda:0,duals)
+    y_store = {} 
+    y_store = defaultdict(lambda:0,duals)
     for a in (model.CapacityConstraint):
         for count,k in enumerate(network.values()):
             if count+1 == a and model.y[k] ==1 :
                 duals[k] = abs(model.dual.get(model.CapacityConstraint[a]))
-    return duals
+                y_store[k] = 1
+    return duals,y_store

@@ -1,6 +1,7 @@
 
 from ampl_data import *
 from MCND import *
+from cores import * 
 
 
 if __name__ == "__main__":
@@ -44,4 +45,9 @@ if __name__ == "__main__":
         instance = model.create_instance("Data\\mcnd_dual.dat")
     solver = pyo.SolverFactory('glpk')
     results = solver.solve(instance)
-    duals = (get_duals(instance))
+    
+    
+    duals = (get_duals(instance)[0])
+    y_star = (get_duals(instance)[1])
+    cores = (get_cores(duals,y_star))
+

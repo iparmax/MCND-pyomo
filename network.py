@@ -30,7 +30,7 @@ def feas_paths(links,O,D):
     count = 1
     for i,j in zip(O,D): 
         for path in nx.all_simple_paths(G, source=i, target=j):
-            r_feas[(count,i)] = path
+            r_feas[(count,i,j)] = path
             count+=1
     return r_feas
 
@@ -72,3 +72,4 @@ def tails(G):
                 tails_dict[(node,count)] = j[1]
 
     return tails_dict
+

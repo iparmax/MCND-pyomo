@@ -1,5 +1,6 @@
 import pyomo.environ as pyo
 import time as tm 
+from network import * 
 
 def obj_expression(model):
 
@@ -45,4 +46,3 @@ def flow_feas(model,u,n):
 
     else:
         return check_flow(model,u,n) == 0
-
