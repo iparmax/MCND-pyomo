@@ -45,6 +45,7 @@ def create_dat():
         links[row[0],'t'] = row[1]
         links[row[0],'c'] = row[2]
         links[row[0],'w'] = row[3]
+        links[row[0],'link_oper'] = row[4]
         no_links +=1
 
     # Loading Networx 
@@ -75,6 +76,7 @@ def create_dat():
     write_param(f,links,'t')
     write_param(f,links,'c')
     write_param(f,links,'w')
+    write_param(f,links,'link_oper')
     write_param(f,routes,'d')
     write_param(f,routes,'O')
     write_param(f,routes,'D')

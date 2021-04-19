@@ -22,6 +22,7 @@ def capacity_constraint(model,l):
         terms.append(model.x[model.origin[l],model.destination[l],u]) 
     return (sum(terms)<= model.w[l]*model.y[model.origin[l],model.destination[l]])
 
+
 def check_flow(model,u,n):
     
     terms_heads = []
@@ -46,3 +47,12 @@ def flow_feas(model,u,n):
 
     else:
         return check_flow(model,u,n) == 0
+
+def fairness(model,o):
+
+    terms = []
+    for l in model.l:
+        if model.link_oper[l] == o and model.link_oper[l] != 7  :
+            terms.append(model.y[model.origin[l],model.destination[l]]) 
+    return (sum(terms) <= model.fair[o])
+

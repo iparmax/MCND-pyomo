@@ -1,5 +1,5 @@
 import pyomo.environ as pyo
-from constraints import flow_feas,capacity_constraint,obj_expression
+from constraints import flow_feas,capacity_constraint,obj_expression,fairness
 from ampl_data import *
 
 
@@ -31,6 +31,7 @@ class MCND():
         self.model.t = pyo.Param(self.model.l)
         self.model.c = pyo.Param(self.model.l)
         self.model.w = pyo.Param(self.model.l)
+        self.model.link_oper = pyo.Param(self.model.l)
         self.model.d = pyo.Param(self.model.u)
         self.model.O = pyo.Param(self.model.u)
         self.model.D = pyo.Param(self.model.u)
@@ -43,13 +44,15 @@ class MCND():
     def get_dv_mip(self):
         x = pyo.Var(self.model.i, self.model.i,self.model.u,within=pyo.NonNegativeIntegers)
         y = pyo.Var(self.model.i, self.model.i,within=pyo.Binary)
-        return x,y
+        fair = pyo.Var(self.model.l,within=pyo.NonNegativeReals,bounds=(0,1))
+        return x,y,fair
 
     # Decision Variables - MIP
     def get_dv_dual(self):
         x = pyo.Var(self.model.i, self.model.i,self.model.u,within=pyo.NonNegativeReals)
         y = pyo.Param(self.model.i,self.model.i, default=0)
-        return x,y
+        fair = pyo.Var(self.model.l,within=pyo.NonNegativeReals)
+        return x,y,fair
     
     def get_obj(self):
         OBJ = pyo.Objective(rule=obj_expression)
@@ -61,4 +64,10 @@ class MCND():
 
     def get_flow_feasibility(self):
         FlowFeasibility = pyo.Constraint(self.model.u,self.model.n,rule=flow_feas)
-        return FlowFeasibility 
+        return FlowFeasibility
+
+    def get_fairness(self):
+        Fairness = pyo.Constraint(self.model.o,rule=fairness)
+        return Fairness 
+
+

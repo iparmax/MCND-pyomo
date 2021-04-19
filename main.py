@@ -11,10 +11,12 @@ if __name__ == "__main__":
     model = mcnd.model
     model.x = mcnd.get_dv_mip()[0]
     model.y = mcnd.get_dv_mip()[1]
+    model.fair = mcnd.get_dv_mip()[2]
     model.OBJ =  mcnd.get_obj()
     model.CapacityConstraint = mcnd.get_cap_constraint()
     model.FlowFeasibility = mcnd.get_flow_feasibility()
-    
+    #model.Fairness = mcnd.get_fairness()
+
     # Solve Original MCND
     start = tm.time()
     try:
